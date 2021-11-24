@@ -15,7 +15,7 @@ module.exports.createBlog = (request, response) => {
         description
     })
         .then(blog=>response.json(blog))
-        .catch(err=>response.json(err))
+        .catch(err=>response.status(405).json(err))
 }
 
 module.exports.findBlogs = (request, response) => {
@@ -27,7 +27,7 @@ module.exports.findBlogs = (request, response) => {
 module.exports.updateBlog = (request, response) => {
     Blog.findOneAndUpdate({_id: request.params.id}, request.body, {new: true})
         .then(updatedBlog => response.json(updatedBlog))
-        .catch(err => response.json(err));
+        .catch(err => response.status(405).json(err));
 }
 
 module.exports.deleteBlog = (request, response) => {
