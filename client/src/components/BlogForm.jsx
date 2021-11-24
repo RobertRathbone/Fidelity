@@ -7,6 +7,8 @@ export default props => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [description, setDescription] = useState("");
+    const [errors, setErrors] = useState([]);
+    const [updated, setUpdated] = useState(true);
 
     const onSubmitHandler = e => {
         e.preventDefault();
@@ -19,26 +21,34 @@ export default props => {
             console.log("Yup", res)
             props.setUpdated(true);
             e.target.reset();
-            
-            // navigate('/');  
+            navigate('/', {state: {setUpdated: setUpdated}});
         })
-        .catch(err=>console.log("Nope", err));
+        .catch(err=>{
+            const errResponse = err.response.data.errors;
+            const errArr =[];
+            for (const key of Object.keys(errResponse)){
+                errArr.push(errResponse[key].message)
+            }
+            setErrors(errArr)
+        })
         
     }
 
     return (
-        <form onSubmit={onSubmitHandler}>
+        
+        <form style={{ height: "100vh", paddingTop: "10px" }} onSubmit={onSubmitHandler}>{errors.map((err, index) => <p key={index}>{err}</p>)}
+        
             <p>
-                <label>Title</label>
-                <input type="text" onChange={e=>setTitle(e.target.value)}/>
+
+                <input type="text" placeholder ="Title" style={{width: "500px"}}  onChange={e=>setTitle(e.target.value)}/>
             </p>
             <p>
-                <label>Body</label>
-                <textarea  rows = {6} onChange={e=>setBody(e.target.value)}/>
+
+                <textarea  placeholder = "Body" rows = {6} style={{width: "500px"}} onChange={e=>setBody(e.target.value)}/>
             </p>
             <p>
-                <label>Description</label>
-                <input type="text" onChange={e=>setDescription(e.target.value)}/>
+ 
+                <input type="text" placeholder = "Description" style={{width: "500px"}}  onChange={e=>setDescription(e.target.value)}/>
             </p>
             <input type="submit"/>
         </form>

@@ -20,6 +20,9 @@ export default props => {
             <button onClick={(e)=> {deleteBlog(id)}}>
                 Delete
             </button>
+            <button onClick={(e)=> {navigate('/' )}}>
+                Go Back
+            </button>
         </div>
 
     )

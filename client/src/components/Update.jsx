@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { navigate } from '@reach/router';
+
 export default props => {
     const { id, oldTitle, oldBody, oldDesc } = props;
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [description, setDescription] = useState("");
+    const [errors, setErrors] = useState([]);
+    // const [updated, setUpdated] = useState(true);
 
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/products' + id)
-    //     .then(res=> {
-    //         setTitle(res.data.title);
-    //         setBody(res.data.body);
-    //         setDescription(res.data.description);
-    //     })
-    // }, [])
     const updateBlog = e => {
         e.preventDefault();
         console.log(id, title, body, description);
@@ -25,33 +19,40 @@ export default props => {
             description
         })
         .then(res => console.log(res));
-        navigate('/');
+        navigate('/')
+        .catch(err=>{
+            const errResponse = err.response.data.errors;
+            const errArr =[];
+            for (const key of Object.keys(errResponse)){
+                errArr.push(errResponse[key].message)
+            }
+            setErrors(errArr)
+        })
     }
     return (
         <div>
-            <h3>Update a Blog</h3>
-            <form onSubmit={updateBlog}>
+            <h1> Fidelity Project </h1>
+            <h3 class = "Update">Update a Blog</h3>
+            <form onSubmit={updateBlog}>{errors.map((err, index) => <p key={index}>{err}</p>)}
 
                 <p>
-                    <label>Title</label>
-                    <input type ="text" name = "title" placeholder = {oldTitle} value = {title} onChange={(e) => {setTitle(e.target.value)}}/>
+                    <input type ="text" name = "title" required value = {title} style = {{width: "500px"}} placeholder = {oldTitle}
+                    onChange={(e) => {setTitle(e.target.value)}}/>
                 </p>
-                {/* <p>
-                    <label>Body</label>
-                    <input type ="text" name = "body" placeholder = {oldBody} value = {body} onChange={(e) => {setBody(e.target.value)}}/>
-                </p> */}
-
                 <p>
-                    <label>Body</label>
-                    <textarea  rows = {6} placeholder = {oldBody}  onChange={e=>setBody(e.target.value)}/>
+                    <textarea  rows = {6} placeholder = {oldBody}
+                    style = {{width: "500px"}}
+                    required  onChange={e=>setBody(e.target.value)}/>
                 </p>
 
                 <p>
-                    <label>Description</label>
-                    <input type ="text" name = "description" placeholder = {oldDesc} value = {description} onChange={(e) => {setDescription(e.target.value)}}/>
+                    <input type ="text" name = "description" placeholder = {oldDesc} required value = {description} style = {{width: "500px"}} onChange={(e) => {setDescription(e.target.value)}}/>
                 </p>
                 <input type = "submit" />
-            </form>        
+            </form> 
+            <button onClick={(e)=> {navigate('/' )}}>
+                Go Back
+            </button>       
         </div>
     )
 }

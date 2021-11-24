@@ -16,7 +16,11 @@ function App() {
 
   return (
     <div className="App">
+      
+      
+
       <Router>
+      
         <Update path="/update/:id/:oldTitle/:oldBody/:oldDesc"/>
         <DisplayRoute path="/:id/:desc"/>
         <Main path="/"></Main>

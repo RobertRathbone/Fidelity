@@ -8,9 +8,6 @@ import BlogForm from './BlogForm';
 export default () => {
     const [blogs, setBlogs] =useState([]);
     const [updated, setUpdated] = useState(false);
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
-    const [description, setDescription] = useState("");
 
     useEffect(()=>{
     axios.get('http://localhost:8000/api/blogs')
@@ -25,9 +22,6 @@ export default () => {
         <>
         <Display blogs = {blogs} removeFromDom = {removeFromDom} />
         <BlogForm  setUpdated = {setUpdated}
-        setBody = {""}
-        setTitle = {""}
-        setDescription = {""}
         />
         </>
     )

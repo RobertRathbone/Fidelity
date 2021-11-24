@@ -1,5 +1,14 @@
-.App {
+body {
   text-align: center;
+  background-color: black;
+  color: white;
+  height: "100vh";
+}
+.Update {
+  text-align: center;
+  background-color: black;
+  color: white;
+  height: "100vh";
 }
 
 .App-logo {
@@ -26,6 +35,9 @@
 
 .App-link {
   color: #61dafb;
+}
+#buttons {
+  padding-top: 5px;
 }
 
 @keyframes App-logo-spin {

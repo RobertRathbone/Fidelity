@@ -9,7 +9,7 @@ export default props => {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [description, setDescription] = useState("");
-    const deleteProduct =(blogId) => {
+    const deleteBlog =(blogId) => {
         console.log(blogId);
         axios.delete(`http://localhost:8000/api/blog/${blogId}`)
             .then(res => {
@@ -17,25 +17,27 @@ export default props => {
             })
     }
 
-    const updateProduct =(blogId, blogTitle, blogBody, blogDesc) => navigate(`/update/${blogId}/${blogTitle}/${blogBody}/${blogDesc}`)
+    const updateBlog =(blogId, blogTitle, blogBody, blogDesc) => navigate(`/update/${blogId}/${blogTitle}/${blogBody}/${blogDesc}`)
 
     const viewDetail =(blogId, blogBody) => navigate(`/${blogId}/${blogBody}`)
 
     return(
-        <div>
+        <div style= {{paddingTop: "30px"}}>
+            <h1> Fidelity Project </h1>
             {props.blogs.map((blog, index)=> {
                 return <p key = {index} > 
                 {blog.title}, {blog.description}
-            
-            <button onClick={(e)=> {deleteProduct(blog._id)}}>
-                Delete
-            </button>
-            <button onClick={(e)=> {viewDetail(blog._id, blog.body)}}>
-                Body
-            </button>
-            <button onClick={(e)=> {updateProduct(blog._id, blog.title, blog.body, blog.description)}}>
-                Update
-            </button>
+            <div id = "buttons">
+                <button onClick={(e)=> {deleteBlog(blog._id)}}>
+                    Delete
+                </button>
+                <button onClick={(e)=> {viewDetail(blog._id, blog.body)}}>
+                    Body
+                </button>
+                <button onClick={(e)=> {updateBlog(blog._id, blog.title, blog.body, blog.description)}}>
+                    Update
+                </button>
+            </div>
             {/* <Link to="/id">
                 <button >
                      <p>Click Me!</p>
